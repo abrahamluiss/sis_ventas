@@ -47,17 +47,23 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <small class="bg-red">Online</small>
-                  <span class="hidden-xs">AliLorentz</span>
+                  <small class="bg-red">{{ Auth::user()->name }}</small>
+                  {{-- <span class="hidden-xs">Admin</span> --}}
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
 
                     <p>
-                      www.incanatoit.com - Desarrollando Software
-                      <small>www.youtube.com/jcarlosad7</small>
+                      SOA
                     </p>
+                    <a class="nav-link" href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('formLogout').submit();">
+                    <i class="ni ni-key-25"></i> Cerrar sesión
+                </a>
+                <form action="{{ route('logout') }}" method="POST" style="display: none;" id="formLogout">
+                    @csrf
+                </form>
                   </li>
 
                   <!-- Menu Footer-->
