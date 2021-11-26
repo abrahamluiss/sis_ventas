@@ -24,19 +24,25 @@ class FaceBookController extends Controller
     {
         try {
             $user = Socialite::driver('facebook')->user();
+            $isUser = User::where('email', $user->getEmail())->first();
+            if(!$isUser){
+                return redirect('No estas registrado como administrador');
+            }else{
 
-            $saveUser = User::updateOrCreate([
-                'facebook_id' => $user->getId(),
-            ],[
-                'name' => $user->getName(),
-                'email' => $user->getEmail(),
-                'role' => 'client',
-                'password' => Hash::make($user->getName().'@'.$user->getId())
-            ]);
+                // Auth::loginUsingId($saveUser->id);
 
-            Auth::loginUsingId($saveUser->id);
+                return redirect()->route('home');
+            }
 
-            return redirect()->route('home');
+            // $saveUser = User::updateOrCreate([
+            //     'facebook_id' => $user->getId(),
+            // ],[
+            //     'name' => $user->getName(),
+            //     'email' => $user->getEmail(),
+            //     'role' => 'client',
+            //     'password' => Hash::make($user->getName().'@'.$user->getId())
+            // ]);
+
         } catch (\Throwable $th) {
             throw $th;
         }
