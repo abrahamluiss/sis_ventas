@@ -8,6 +8,7 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\IngresoController;
 use App\Http\Controllers\Social\FaceBookController;
 use App\Http\Controllers\Social\GoogleController;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 /*
@@ -22,17 +23,23 @@ use Laravel\Socialite\Facades\Socialite;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
-Route::resource('almacen/categoria',CategoriaController::class);
-Route::resource('almacen/articulo',ArticuloController::class);
-Route::resource('ventas/cliente',ClienteController::class);
-Route::resource('compras/proveedor',ProveedorController::class);
-Route::resource('compras/ingreso',IngresoController::class);
+Route::middleware(['auth','admin'])->group(function () {
+
+    Route::resource('almacen/categoria',CategoriaController::class);
+    Route::resource('almacen/articulo',ArticuloController::class);
+    Route::resource('ventas/cliente',ClienteController::class);
+    Route::resource('compras/proveedor',ProveedorController::class);
+    Route::resource('compras/ingreso',IngresoController::class);
+
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
+
+
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Facebook Login URL
 Route::prefix('facebook')->name('facebook.')->group( function(){
