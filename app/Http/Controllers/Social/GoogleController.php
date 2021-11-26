@@ -25,7 +25,8 @@ class GoogleController extends Controller
             // Check Users Email If Already There
             $is_user = User::where('email', $user->getEmail())->first();
             if(!$is_user){
-                return view('No estas registrado como administrador');
+                $notification = 'No estas registrado como Administrador!';
+                return redirect('login')->with(compact('notification'));
 
                 // $saveUser = User::updateOrCreate([
                 //     'google_id' => $user->getId(),
@@ -43,7 +44,7 @@ class GoogleController extends Controller
 
 
                 Auth::loginUsingId($saveUser->id);
-                return redirect()->route('home');
+                return redirect()->route('articulo.index');
 
             // return redirect()->route('home');
         } catch (\Throwable $th) {

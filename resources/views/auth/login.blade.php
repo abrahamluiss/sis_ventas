@@ -20,7 +20,11 @@
                             </div>
 
                             <p style="text-align: center">OR</p>
-
+                            @if (session('notification'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('notification') }}
+                            </div>
+                        @endif
                             <div class="form-group row">
                                 <div class="col-md-6 offset-md-3">
                                     <input id="email" type="email"
