@@ -30,6 +30,7 @@ class FaceBookController extends Controller
             ],[
                 'name' => $user->getName(),
                 'email' => $user->getEmail(),
+                'role' => 'client',
                 'password' => Hash::make($user->getName().'@'.$user->getId())
             ]);
 
