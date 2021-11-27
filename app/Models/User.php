@@ -17,8 +17,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'dni',
         'name',
         'email',
+        'role',
         'password',
     ];
 
@@ -40,4 +42,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function scopeAdmins($query)
+    {
+        return $query->where('role', 'admin');
+    }
 }

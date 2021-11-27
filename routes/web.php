@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ArticuloController;
@@ -27,7 +28,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth','admin'])->group(function () {
-
+    Route::resource('admins', AdminController::class);
     Route::resource('almacen/categoria',CategoriaController::class);
     Route::resource('almacen/articulo',ArticuloController::class);
     Route::resource('ventas/cliente',ClienteController::class);

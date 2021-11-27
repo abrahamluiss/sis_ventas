@@ -55,14 +55,14 @@
 						<input type="text" name="email" value="{{old('email')}}" class="form-control" placeholder="Email...">
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<button class="btn btn-primary" type="submit">Guardar</button>
 					<button class="btn btn-danger" type="reset">Cancelar</button>
 				</div>
 			</div>
-			
-			
+
+
 			{!!Form::close()!!}
 		</div>
 	</div>
