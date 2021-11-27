@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AdminController;
+use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\ProveedoresController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,7 +16,21 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('v1/proveedores', [ProveedoresController::class, 'index']);
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'v1/'
+
+], function ($router) {
+    Route::post('login', [AuthController::class, 'login'])->name('login');
+    Route::post('logout', [\App\Http\Controllers\Api\V1\AuthController::class, 'logout'])->name('logout');
+
+
+    // Route::post('me', [\App\Http\Controllers\Api\V1\AuthController::class, 'me'])->name('me');
+});
+
+Route::middleware(['auth:api'])->group(function () {
+    Route::get('v1/admins', [AdminController::class, 'show']);
+    Route::post('v1/admins', [AdminController::class, 'store']);
 });
